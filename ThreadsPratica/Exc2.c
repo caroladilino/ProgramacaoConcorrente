@@ -31,7 +31,8 @@ typedef struct {
 void * somar_vetor(void* arg){
     //convertendo o argumento recebido pela função (que é um void*) para um ponteiro de int
     thread_args *args = (thread_args *) arg;
-    
+
+    //vai repetir a soma de a com b do lugar de inicio até o lugar fim do vetor (a area que essa thread é responsavel)
     for (int i = args->inicio; i < args->fim; i++ ){
         args->vetor_c[i] = args->vetor_a[i] + args->vetor_b[i];
     }
@@ -88,8 +89,9 @@ int main(int argc, char* argv[]) {
     // do argumento e fugiu pro caribe. É essa computação que você precisa 
     // paralelizar
     //for (int i = 0; i < a_size; ++i) 
-        //c[i] = a[i] + b[i];
+    //c[i] = a[i] + b[i];
 
+    //garante que no max serão criadas uma thread para cada soma
     if (n_threads > a_size){
         n_threads = a_size;
     }
@@ -100,14 +102,15 @@ int main(int argc, char* argv[]) {
     //criando n_threads threads
     for (int i = 0; i < n_threads; ++i){
     
-    //cada thread recebe o lugar que vai começar e terminar
-    argumentos[i].inicio = i *(a_size/n_threads);
-    argumentos[i].fim = (i +1)*(a_size/n_threads);
-    
-    //todas as threads vão receber o vetor inteiro
-    argumentos[i].vetor_a = a;
-    argumentos[i].vetor_b = b;
-    argumentos[i].vetor_c = c;
+        //cada thread recebe o lugar que vai começar e terminar
+        //isso é calculado divindo o tamanho do vetor pela qtd de threads
+        argumentos[i].inicio = i *(a_size/n_threads);
+        argumentos[i].fim = (i +1)*(a_size/n_threads);
+        
+        //todas as threads vão receber o vetor inteiro
+        argumentos[i].vetor_a = a;
+        argumentos[i].vetor_b = b;
+        argumentos[i].vetor_c = c;
 
     pthread_create(&thread[i], NULL, somar_vetor, (void *) &argumentos[i]); //converter inteiro para void * pq o tipo de ponteiro q ele quer  
     }
