@@ -104,8 +104,13 @@ int main(int argc, char* argv[]) {
     
         //cada thread recebe o lugar que vai começar e terminar
         //isso é calculado divindo o tamanho do vetor pela qtd de threads
-        argumentos[i].inicio = i *(a_size/n_threads);
-        argumentos[i].fim = (i +1)*(a_size/n_threads);
+        argumentos[i].inicio = i *((int)a_size/n_threads); 
+        argumentos[i].fim = (i + 1)*((int)a_size/n_threads);
+
+         //acertando o # de threads na última iteração
+         if ((double)a_size/n_threads != (int)a_size/n_threads && i == n_threads -1){
+                argumentos[i].fim += n_threads*((double)a_size/n_threads - (int)a_size/n_threads);
+         }
         
         //todas as threads vão receber o vetor inteiro
         argumentos[i].vetor_a = a;
