@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <pthread.h>
-#include <math.h>
+
 
 // Lê o conteúdo do arquivo filename e retorna um vetor E o tamanho dele
 // Se filename for da forma "gen:%d", gera um vetor aleatório com %d elementos
@@ -137,14 +137,9 @@ int main(int argc, char* argv[]) {
     }
 
     //quando você aloca um espaço na memória tem que liberar ele depois
+    //muito importante fazer isso TODA vez que voê usa => free() deveestar dentro do for
    
    
-
-
-
-
-
-
  
     //    +---------------------------------+
     // ** | IMPORTANTE: avalia o resultado! | **
