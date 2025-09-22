@@ -43,4 +43,7 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < n_threads; ++i){
        pthread_join(thread[i], NULL); 
     }
+
+    printf("Contador: %d \n", contador_global);
+    printf("Esperado: %d \n", n_threads*n_loops);
 }    
