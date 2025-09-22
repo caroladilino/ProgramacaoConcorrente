@@ -99,7 +99,10 @@ int main(int argc, char* argv[]) {
     pthread_t thread[n_threads];
     thread_args argumentos[n_threads];
 
-    
+    //garante que no max serão criadas uma thread por [i]
+    if (n_threads > a_size){
+        n_threads = a_size;
+    }
 
 
 
@@ -115,9 +118,13 @@ int main(int argc, char* argv[]) {
         //isso é calculado divindo o tamanho do vetor pela qtd de threads
         argumentos[i].inicio = i *((int)a_size/n_threads); 
         argumentos[i].fim = (i + 1)*((int)a_size/n_threads);
-        
-            if (a_size/n_threads % 2 != 0 && i == n_threads -1){
-                argumentos[i].fim += n_threads*(a_size/n_threads - (int)a_size/n_threads) ;
+
+        //aqui faz uma checagem se o número de itens do vetor é divisível pelo número de threads e se é a última iteração do for
+        //caso o número seja ímpar, a lógica anterior não funcionaria, daí a gente usa esse if pra somar ao "fim" a qtd de casas que falta
+        //exemplo: 11 itens no vetor, 2 threads. a lógica acima vai separar de 0-5 p/ primeira thread e de 5 até 10 para a segunda. 
+        //com o if, multiplicamos o numero de threads pela parte decimal da divisão a_size/n_threads, ou seja, 2 * 0,5 e somamos isso ao fim
+            if ((double)a_size/n_threads != (int)a_size/n_threads && i == n_threads -1){
+                argumentos[i].fim += n_threads*((double)a_size/n_threads - (int)a_size/n_threads);
             }        
 
         //todas as threads vão receber o vetor inteiro
