@@ -1,0 +1,4 @@
+exc 1 feito
+exc 3 feito
+exc 2 falta terminar!!!!!!
+precisa aplicar a lógica de calculo da qtd de threads do exc 3 para o 2
